@@ -1,0 +1,41 @@
+/SAMPLE *Queries done in SQLite Studio
+from imported & connected BIT_DB database
+DB inclides 6+ individual tables queried below*/
+
+/*How many orders were placed in January?*/
+SELECT COUNT(orderID)
+FROM BIT_DB.JanSales;
+
+/*How many of those orders were for an iPhone?*/
+SELECT product, SUM(quantity)
+FROM BIT_DB.JanSales
+WHERE product='iPhone';
+
+/*Select the customer account numbers for all the orders that were placed in February.*/
+SELECT customers.acctnum
+FROM BIT_DB.FebSales
+JOIN BIT_DB.customers
+ON FebSales.orderID = customers.order_id;
+
+/*Which product was the cheapest one sold in January, and what was the price?*/
+SELECT product, MIN(price)
+FROM BIT_DB.JanSales;
+
+/*What is the total revenue for each product sold in January?*/
+SELECT SUM(quantity) * price AS Revenue, Product
+FROM BIT_DB.JanSales
+GROUP BY product;
+
+/*Which products were sold in February at 548 Lincoln St, Seattle, WA 98101, 
+how many of each were sold, and what was the total revenue?*/
+SELECT SUM(quantity), product, SUM(quantity)*price AS Revenue  
+FROM Bit_DB.FebSales
+WHERE location = '548 Lincoln St, Seattle, WA 98101';
+
+/*How many customers ordered more than 2 products at a time in February, 
+and what was the average amount spent for those customers?*/
+SELECT COUNT(cust.acctnum), AVG(quantity*price)
+FROM Bit_DB.FebSales feb
+JOIN Bit_DB.customers cust
+ON cust.order_id=feb.orderID
+WHERE feb.quantity > 2;
