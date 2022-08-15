@@ -9,17 +9,37 @@ FROM BIT_DB.JanSales;
 /*How many of those orders were for an iPhone?*/
 SELECT product, SUM(quantity)
 FROM BIT_DB.JanSales
-WHERE product='iPhone';
+WHERE product = 'iPhone';
 
-/*Select the customer account numbers for all the orders that were placed in February.*/
-SELECT customers.acctnum
-FROM BIT_DB.FebSales
-JOIN BIT_DB.customers
-ON FebSales.orderID = customers.order_id;
+/* Select the customer account numbers for all the orders that were placed in February.*/
+SELECT acctnum
+FROM BIT_DB.customers cust
+INNER JOIN BIT_DB.FebSales feb
+ON cust.order_id = feb.orderid;
 
 /*Which product was the cheapest one sold in January, and what was the price?*/
-SELECT product, MIN(price)
-FROM BIT_DB.JanSales;
+/*Option 1*/
+SELECT distinct Product, price
+FROM BIT_DB.JanSales
+WHERE  price in (SELECT min(price) FROM BIT_DB.JanSales)
+
+/*Option 2*/
+SELECT distinct product, price 
+FROM BIT_DB.JanSales 
+ORDER BY price ASC LIMIT 1
+
+/*Option 3*/
+SELECT distinct product, MIN(price) 
+FROM BIT_DB.JanSales Jan 
+GROUP BY product, price 
+ORDER BY price ASC LIMIT 1
+
+/*Option 4*/
+SELECT product, min(price) 
+FROM BIT_DB.JanSales Jan 
+GROUP BY product, price 
+ORDER BY price ASC
+LIMIT 1
 
 /*What is the total revenue for each product sold in January?*/
 SELECT SUM(quantity) * price AS Revenue, Product
@@ -39,3 +59,46 @@ FROM Bit_DB.FebSales feb
 JOIN Bit_DB.customers cust
 ON cust.order_id=feb.orderID
 WHERE feb.quantity > 2;
+
+/*NOTES--
+--Most RDBMS won't allow you to select an aggregate function (like min(price)) along with a non-aggregate function (like Product) 
+unless you also have a GROUP BY clause at the end of the query, like this:
+  SELECT distinct product, min(price)
+  FROM BIT_DB.JanSales
+  GROUP BY product
+
+This is because without the GROUP BY, the RDBMS doesn't know you're asking for the min(price) of all products. 
+It thinks you're asking for the min(price) of each product. 
+And since the data doesn't have multiple prices for the same item, this isn't something we'd be interested in seeing.
+
+For whatever reason, SQLite allows you to run that query without the GROUP BY. 
+But because most RDBMS would give you an error.
+
+
+--SUM(quantity)*price vs SUM(quantity*price)--
+
+   Option...
+   SELECT orderid, quantity, price, product
+   FROM BIT_DB.JanSales;
+   
+   You should see results showing that for each orderID, 1 or 2 products were ordered at a time. 
+   There are lots of duplicates of the product names, because different order IDs ordered the same product in many cases. 
+   How would we calculate how many of each product were sold? We'd use SUM(quantity).
+
+  Alternative...
+  SELECT SUM(quantity), price, product
+  FROM BIT_DB.JanSales
+  GROUP BY product, price;
+  
+  Now there's only one of each product listed, with the price of that product and the total quantity of each that were sold. 
+  We want to take it once step further now and calculate the revenue for each product, 
+  which would be the the quantity of each product sold * the price of each product.
+  Based on our last query, we can see that this would be:
+
+  Best Practice
+  SELECT SUM(quantity)*price as Revenue ,product
+  FROM BIT_DB.JanSales
+  GROUP BY product;
+  --*/
+
+
