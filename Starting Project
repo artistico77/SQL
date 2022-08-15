@@ -1,6 +1,7 @@
---in this introductory project I create a sample store using SQL.  The task was for it to have 5 identifiers, 15 products, and a few outputs
+--Introductory project using SQL. 
 
-CREATE TABLE store (id integer primary key, product text, stock integer, price integer, color text);
+CREATE TABLE store 
+(id integer primary key, product text, stock integer, price integer, color text);
 
 INSERT INTO store VALUES 
 (1, "laptops", 3, 100, "white"),
@@ -19,14 +20,16 @@ INSERT INTO store VALUES
 (14, "speakers", 22, 9, "wood"),
 (15, "power cord", 2, 5, "white");
 
---This shows the entire table.
+--Show the entire table.
 SELECT * FROM store;
 
---This displays the entire inventory amount.
+--Display the entire inventory amount.
 SELECT SUM(stock) FROM store;
 
---This shows all products ordered by price.
-SELECT * FROM store ORDER BY price asc;
+--Show all products ordered by price.
+SELECT * FROM store 
+ORDER BY price asc;
 
---This shows all products ordered by amount in stock.
-SELECT * FROM store ORDER BY stock asc;
+--Show all products ordered by amount in stock.
+SELECT * FROM store 
+ORDER BY stock asc;
