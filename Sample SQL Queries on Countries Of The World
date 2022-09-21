@@ -1,8 +1,6 @@
-/*
-Countries and dependent territories, 2020
+/* Countries and dependent territories, 2020
 Data adapted from http://www.worldometers.info/world-population/population-by-country/
-Does not include rows which had "N.A." values, so some territories are missing.
- */
+Does not include rows which had "N.A." values, so some territories are missing. */
 
 CREATE TABLE countries(
    name                    TEXT PRIMARY KEY,
@@ -218,51 +216,51 @@ INSERT INTO countries(name,population,percent_one_year_change,population_change,
 INSERT INTO countries(name,population,percent_one_year_change,population_change,density_per_sq_km,area_sq_km,net_migrants,fertility_rate,median_age,percent_of_world_pop) VALUES ('Seychelles',98347,0.62,608,214,460,-200,2.50,34.00,0);
 INSERT INTO countries(name,population,percent_one_year_change,population_change,density_per_sq_km,area_sq_km,net_migrants,fertility_rate,median_age,percent_of_world_pop) VALUES ('Antigua and Barbuda',97929,0.84,811,223,440,0,2.00,34.00,0);
 
---Show how many countries are listed
+/* How many countries are listed */
 SELECT COUNT(name) AS total_countries FROM countries;
 
---Show which country has the highest population as well as the population total for that country
+/* Which country has the highest population as well as the population total for that country */
 SELECT name,MAX(population) AS most_populated FROM countries;
 
---Display which country has the lowest population as well as the population total for that country
+/* Which country has the lowest population as well as the population total for that country */
 SELECT name,MIN(population) AS least_populated FROM countries;
 
---Display the average pupulation from all countries
+/* What is the average pupulation from all countries */
 SELECT ROUND(AVG(population)) AS avg_population FROM countries;
 
---Display the 6 highest populated countries
+/* What are the 6 highest populated countries */
 SELECT name, population 
 FROM countries 
 WHERE population > 38774455 
 ORDER BY population desc LIMIT 6;
 
---Display the 6 least populated countries
+/* What are the 6 least populated countries */
 SELECT name, population 
 FROM countries 
 WHERE population < 38774455 
 ORDER BY population asc LIMIT 6;
 
---Display the 6 largest countries by square kilometer
+/* What are the 6 largest countries by square kilometer */
 SELECT name, area_sq_km 
 FROM countries 
 ORDER BY area_sq_km desc LIMIT 6;
 
---Display the 6 smallest countries by square kilometer
+/* What are the 6 smallest countries by square kilometer */
 SELECT name, area_sq_km 
 FROM countries 
 ORDER BY area_sq_km asc LIMIT 6;
 
---Display the 6 most densley populated countries by square kilometer
+/* What are the 6 most densley populated countries by square kilometer */
 SELECT name, density_per_sq_km 
 FROM countries 
 ORDER BY density_per_sq_km desc LIMIT 6;
 
---Display the 6 least densley populated countries by square kilometer
+/* What are the 6 least densley populated countries by square kilometer */
 SELECT name, density_per_sq_km F
 ROM countries 
 ORDER BY density_per_sq_km asc LIMIT 6;
 
---Show groups of country median ages by decade
+/* Show groups of country median ages by decade */
 SELECT COUNT(*) AS country_count, 
 CASE
     WHEN median_age > 39 THEN "40s"
@@ -273,7 +271,8 @@ CASE
 FROM countries
 GROUP BY median_ages;
 
---Show top 5 countries where density per square kilometer is greater than 500 people and where the total area of the country is less than 500sqkm.
+/* Which top 5 countries have density per square kilometer greater than 500 people and where the total 
+area of the country is less than 500sqkm. */
 SELECT name, area_sq_km, density_per_sq_km 
 FROM countries 
 WHERE density_per_sq_km > 500 AND area_sq_km < 500 LIMIT 5;
