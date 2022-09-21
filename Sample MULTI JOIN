@@ -1,5 +1,5 @@
-CREATE TABLE persons (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+CREATE TABLE persons
+    (id INTEGER PRIMARY KEY AUTOINCREMENT,
     fullname TEXT,
     age INTEGER);
     
@@ -9,8 +9,8 @@ INSERT INTO persons (fullname, age) VALUES ("Banana FoFanna", "14");
 INSERT INTO persons (fullname, age) VALUES ("Shish Kabob", "20");
 INSERT INTO persons (fullname, age) VALUES ("Fluffy Sparkles", "8");
 
-CREATE table hobbies (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+CREATE TABLE hobbies 
+    (id INTEGER PRIMARY KEY AUTOINCREMENT,
     person_id INTEGER,
     name TEXT);
     
@@ -25,8 +25,8 @@ INSERT INTO hobbies (person_id, name) VALUES (4, "coding");
 INSERT INTO hobbies (person_id, name) VALUES (4, "dilly-dallying");
 INSERT INTO hobbies (person_id, name) VALUES (4, "meowing");
 
-CREATE table friends (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+CREATE TABLE friends 
+    (id INTEGER PRIMARY KEY AUTOINCREMENT,
     person1_id INTEGER,
     person2_id INTEGER);
 
