@@ -1,5 +1,5 @@
-CREATE TABLE customers (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+CREATE TABLE customers  
+    (id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT,
     email TEXT);
     
@@ -7,8 +7,8 @@ INSERT INTO customers (name, email) VALUES ("Doctor Who", "doctorwho@timelords.c
 INSERT INTO customers (name, email) VALUES ("Harry Potter", "harry@potter.com");
 INSERT INTO customers (name, email) VALUES ("Captain Awesome", "captain@awesome.com");
 
-CREATE TABLE orders (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+CREATE TABLE orders     
+    (id INTEGER PRIMARY KEY AUTOINCREMENT,
     customer_id INTEGER,
     item TEXT,
     price REAL);
@@ -19,11 +19,16 @@ INSERT INTO orders (customer_id, item, price)
     VALUES (2, "High Quality Broomstick", 40.00);
 INSERT INTO orders (customer_id, item, price)
     VALUES (1, "TARDIS", 1000000.00);
-    
+
+/* Join two tables showing customer's name, email, item orders, and order price */
+
 SELECT customers.name, customers.email, orders.item, orders.price
 FROM customers
 LEFT OUTER JOIN orders
 ON customers.id = orders.customer_id;
+
+/* Join two tables showing customer's name, email, the total order price and rename that column as Total Spent, then order it
+by total spent from highest to lowest amount */
 
 SELECT customers.name, customers.email, SUM(orders.price) AS total_spent
 FROM customers
