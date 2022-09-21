@@ -1,32 +1,38 @@
-/* Sample Filters*/
-/*Filter by Order Date between 2/13/2019 and 2/18/2019.  Order ascending.*/
+/* Sample Filters
+Filter by Order Date between 2/13/2019 and 2/18/2019.  Order ascending.*/
+
 SELECT orderdate
 FROM BIT_DB.FebSales
 WHERE orderdate between '02/13/19 00:00' AND '02/18/19 00:00'
 ORDER BY orderdate ASC;
 
 /*Find location of order for exact date & time 2/18/19 at 1:35pm*/
+
 SELECT location
 FROM BIT_DB.FebSales 
 WHERE orderdate = '02/18/19 01:35';
 
 /*Find quantity of orders in February on 2/18/2019*/
+
 SELECT sum(quantity)
 FROM BIT_DB.FebSales 
 WHERE orderdate like '02/18/19%';
 
 /*Find products (without listing duplicates) that contain batteries in the description sold in Feb*/
+
 SELECT distinct Product
 FROM BIT_DB.FebSales
 WHERE Product like '%Batteries%';
 
 /*Show the Product and Price for prodeucts sold in Feb where the price ended in *.99 */
+
 SELECT distinct Product, Price
 FROM BIT_DB.FebSales 
 WHERE Price like '%.99';
 
 /*List all the products sold in Los Angeles in February, and 
 include how many of each were sold.*/
+
 SELECT DISTINCT product, SUM(quantity), location
 FROM BIT_DB.FebSales
 WHERE location LIKE '%Los Angeles%'
