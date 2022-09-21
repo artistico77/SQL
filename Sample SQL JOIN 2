@@ -1,9 +1,9 @@
 CREATE TABLE Famous_People
-(id INTEGER PRIMARY KEY,
-first_name TEXT,
-last_name TEXT,
-birthdate TEXT,
-occupation INTEGER);
+  (id INTEGER PRIMARY KEY,
+  first_name TEXT,
+  last_name TEXT,
+  birthdate TEXT,
+  occupation INTEGER);
 
 INSERT INTO Famous_People (first_name, last_Name, birthdate, occupation)
 VALUES ("Leonardo", "Dicaprio", "11-11-1974", 1);
@@ -28,14 +28,16 @@ VALUES ("Cary", "Grant", "01-18-1904", 5);
 
 
 CREATE TABLE Profession 
-(id INTEGER PRIMARY KEY,
-title TEXT);
+  (id INTEGER PRIMARY KEY,
+  title TEXT);
 
 INSERT INTO Profession VALUES (1, "Actor");
 INSERT INTO Profession VALUES (2, "Musician");
 INSERT INTO Profession VALUES (3, "Dancer");
 INSERT INTO Profession VALUES (4, "Model");
 INSERT INTO Profession VALUES (5, "Actor");
+
+/* Join two tables showing first name, last name, and their title / occupation */
 
 SELECT a.first_name, a.last_name, b.title
 FROM famous_people a
